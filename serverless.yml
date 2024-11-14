@@ -1,0 +1,24 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: ivandersr
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: image-analysis
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Resource: "*"
+          Action: "rekognition:*"
+        - Effect: "Allow"
+          Resource: "*"
+          Action: "translate:TranslateText"
+functions:
+  img-analysis:
+    handler: handler.main
+    events:
+      - http:
+          path: analyse
+          method: get
